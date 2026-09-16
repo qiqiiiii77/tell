@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tell — the adherence call that doesn't take "yes" for an answer</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🎧</text></svg>">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <h1>Tell</h1>
+    <p>A medication-adherence call that <b>listens to how the answer was given</b>, and refuses to write down a “yes” the patient didn’t mean.</p>
+  </div>
+  <div id="status" class="status">Ready</div>
+</header>
+
+<section class="explain">
+  <div class="pipe">
+    <div class="node">
+      <span class="tag">one microphone</span>
+      <b>Patient audio</b>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node split">
+      <div><span class="tag">AssemblyAI</span><b>Voice Agent API</b><small>turn-taking · LLM · voice · tool calls</small></div>
+      <div><span class="tag">AssemblyAI</span><b>Streaming STT v3</b><small>word timings · per-word confidence</small></div>
+      <div><span class="tag">in-browser</span><b>Local DSP</b><small>pitch · energy — never uploaded</small></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node gate-node">
+      <span class="tag">the point</span>
+      <b>Vocal-certainty gate</b>
+      <small>below <span id="gate-threshold">55%</span>, the write is refused</small>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section class="panel call">
+    <div class="panel-head">
+      <h2>Call</h2>
+      <div class="controls">
+        <button id="btn-start" class="btn primary">Start call</button>
+        <button id="btn-end" class="btn danger" disabled>End call</button>
+      </div>
+    </div>
+
+    <div class="meters">
+      <div class="meter"><label>Level</label><div class="level"><i id="m-level"></i></div></div>
+      <div class="meter"><label>dB</label><b id="m-db">—</b></div>
+      <div class="meter"><label>Pitch</label><b id="m-hz">—</b></div>
+    </div>
+
+    <div id="transcript" class="transcript"></div>
+    <div id="partial" class="partial"></div>
+  </section>
+
+  <section class="panel gate">
+    <div class="panel-head">
+      <h2>Gate</h2>
+      <div class="lab">
+        <span class="lab-label">Try it without a mic:</span>
+        <button class="btn tiny" data-lab="committed">committed</button>
+        <button class="btn tiny" data-lab="hedged">hedged</button>
+        <button class="btn tiny" data-lab="hesitant">hesitant</button>
+        <button class="btn tiny" data-lab="disclosed">disclosed</button>
+        <label class="lab-check"><input type="checkbox" id="lab-baseline" checked> with baseline</label>
+      </div>
+    </div>
+    <div id="gate-feed" class="gate-feed">
+      <p class="empty">Every time the agent tries to write an answer into the record, the decision shows up here — the score, the evidence behind it, and the follow-up question that was sent back.</p>
+    </div>
+  </section>
+
+  <section class="panel chart">
+    <div class="panel-head"><h2>Clinical record</h2></div>
+    <div id="record" class="record"></div>
+    <details class="evlog-wrap">
+      <summary>Voice Agent API event log</summary>
+      <div id="evlog" class="evlog"></div>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <p>
+    Built on the <b>AssemblyAI Voice Agent API</b> and <b>Streaming Speech-to-Text v3</b>.
+    Tell records what a patient said and how sure they sounded; it does not diagnose,
+    and every flagged answer goes to a human clinician.
+  </p>
+  <p class="meta">AssemblyAI Voice Agent Hackathon · MIT licensed · <a href="https://github.com/">source</a></p>
+</footer>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+[
+  {
+    "emotion": "neutral",
+    "text": "Kids are talking by the door.",
+    "aai_conf": 0.99862194,
+    "aai_word_conf_min": 0.9963923,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.564
+      ]
+    ],
+    "dur": 3.303,
+    "f0_mean": 0,
+    "f0_std": 0,
+    "f0_n": 0,
+    "rms_mean": 0.002,
+    "rms_std": 0.003
+  },
+  {
+    "emotion": "calm",
+    "text": "Kids are talking by the door.",
+    "aai_conf": 0.9979265,
+    "aai_word_conf_min": 0.99413306,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.564
+      ]
+    ],
+    "dur": 3.704,
+    "f0_mean": 0,
+    "f0_std": 0,
+    "f0_n": 0,
+    "rms_mean": 0.001,
+    "rms_std": 0.002
+  },
+  {
+    "emotion": "happy",
+    "text": "Kids are talking by the door. Hm",
+    "aai_conf": 0.9269946,
+    "aai_word_conf_min": 0.61403,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.564
+      ],
+      [
+        "NEUTRAL",
+        0.554
+      ]
+    ],
+    "dur": 3.67,
+    "f0_mean": 224.623,
+    "f0_std": 25.391,
+    "f0_n": 39,
+    "rms_mean": 0.006,
+    "rms_std": 0.009
+  },
+  {
+    "emotion": "sad",
+    "text": "Kids are talking by the door.",
+    "aai_conf": 0.9965469,
+    "aai_word_conf_min": 0.98973995,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.564
+      ]
+    ],
+    "dur": 3.804,
+    "f0_mean": 0,
+    "f0_std": 0,
+    "f0_n": 0,
+    "rms_mean": 0.003,
+    "rms_std": 0.004
+  },
+  {
+    "emotion": "angry",
+    "text": "Kids are talking by the door!",
+    "aai_conf": 0.98149717,
+    "aai_word_conf_min": 0.9046204,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.594
+      ]
+    ],
+    "dur": 4.104,
+    "f0_mean": 320.561,
+    "f0_std": 69.863,
+    "f0_n": 153,
+    "rms_mean": 0.051,
+    "rms_std": 0.073
+  },
+  {
+    "emotion": "fearful",
+    "text": "Kids uh are talking by the door.",
+    "aai_conf": 0.8765271,
+    "aai_word_conf_min": 0.50388795,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.633
+      ]
+    ],
+    "dur": 5.005,
+    "f0_mean": 225.55,
+    "f0_std": 38.822,
+    "f0_n": 120,
+    "rms_mean": 0.016,
+    "rms_std": 0.027
+  },
+  {
+    "emotion": "disgust",
+    "text": "Kids are talking by the door.",
+    "aai_conf": 0.9672584,
+    "aai_word_conf_min": 0.8210239,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.564
+      ]
+    ],
+    "dur": 4.304,
+    "f0_mean": 252.756,
+    "f0_std": 43.146,
+    "f0_n": 68,
+    "rms_mean": 0.011,
+    "rms_std": 0.018
+  },
+  {
+    "emotion": "surprised",
+    "text": "Kids are talking by the door.",
+    "aai_conf": 0.9910057,
+    "aai_word_conf_min": 0.9483785,
+    "sentiments": [
+      [
+        "NEUTRAL",
+        0.564
+      ]
+    ],
+    "dur": 3.437,
+    "f0_mean": 186.174,
+    "f0_std": 34.452,
+    "f0_n": 51,
+    "rms_mean": 0.007,
+    "rms_std": 0.01
+  }
+]
