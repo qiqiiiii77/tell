@@ -1,0 +1,96 @@
+{
+ "style": "clean",
+ "direction": "TB",
+ "title": "One microphone, two AssemblyAI sockets, one gate",
+ "caption": "The Voice Agent API owns the conversation. Streaming STT v3 owns the measurement. Neither can write to the record without the other.",
+ "nodesep": 46,
+ "ranksep": 62,
+ "maxW": 280,
+ "nodes": [
+  {
+   "id": "mic",
+   "text": "Patient on the phone",
+   "kind": "default",
+   "bold": true
+  },
+  {
+   "id": "agent",
+   "text": "Voice Agent API\n24 kHz\nturn-taking, LLM, voice,\ntool calls",
+   "kind": "primary"
+  },
+  {
+   "id": "stt",
+   "text": "Streaming STT v3\n16 kHz\nword timings and\nper-word confidence",
+   "kind": "primary"
+  },
+  {
+   "id": "dsp",
+   "text": "In-browser DSP\npitch and energy\nnever uploaded",
+   "kind": "note"
+  },
+  {
+   "id": "gate",
+   "text": "Vocal-certainty gate\ndead air, hedging, fillers,\nword confidence, arousal\nscored against this patient's\nown baseline",
+   "kind": "accent",
+   "bold": true
+  },
+  {
+   "id": "ok",
+   "text": "RECORDED\nwith its certainty",
+   "kind": "good",
+   "bold": true
+  },
+  {
+   "id": "no",
+   "text": "REFUSED\nplus the follow-up question\nthat recovers the fact",
+   "kind": "danger",
+   "bold": true
+  }
+ ],
+ "edges": [
+  {
+   "from": "mic",
+   "to": "agent"
+  },
+  {
+   "from": "mic",
+   "to": "stt"
+  },
+  {
+   "from": "mic",
+   "to": "dsp"
+  },
+  {
+   "from": "agent",
+   "to": "gate",
+   "label": "tool call"
+  },
+  {
+   "from": "stt",
+   "to": "gate",
+   "label": "words + confidence"
+  },
+  {
+   "from": "dsp",
+   "to": "gate",
+   "label": "F0 / dB",
+   "dashed": true
+  },
+  {
+   "from": "gate",
+   "to": "ok",
+   "label": "≥ 55%"
+  },
+  {
+   "from": "gate",
+   "to": "no",
+   "label": "< 55%"
+  },
+  {
+   "from": "no",
+   "to": "agent",
+   "label": "agent re-asks",
+   "dashed": true
+  }
+ ]
+}

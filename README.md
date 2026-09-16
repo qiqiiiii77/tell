@@ -6,6 +6,8 @@ Built for the AssemblyAI Voice Agent Hackathon on the
 [Voice Agent API](https://www.assemblyai.com/docs/voice-agents/voice-agent-api)
 and [Streaming Speech-to-Text v3](https://www.assemblyai.com/docs/streaming).
 
+![Tell](docs/cover.png)
+
 ---
 
 Ask a patient whether they have been taking their tablets and most of them say
@@ -90,6 +92,8 @@ both a conversation and a measurement.
               │                     │
         write the fact        refuse + probe
 ```
+
+![Architecture](docs/architecture.png)
 
 **Why two transcriptions of the same audio?** The Voice Agent API returns
 `transcript.user` as a plain string. That is everything an agent needs to answer
