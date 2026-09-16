@@ -7,3 +7,8 @@ samples/audio/*.aiff
 # 中文工作文档（不进公开仓库，比赛是英文的）
 状态与待办.md
 提交材料.md
+
+# 视频中间产物（可用 tools/ 重新生成）
+video/frames/
+video/audio/
+video/tell.mp4

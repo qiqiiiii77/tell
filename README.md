@@ -49,6 +49,13 @@ RECORD    metformin: missed_some (Tuesday, Wednesday)
 That is a real run — `node tools/simulate-call.mjs`, transcript unedited.
 Without the gate, the last line reads `took_all`.
 
+**Your run will not produce these exact numbers.** Speech synthesis and
+transcription both jitter by tens of milliseconds, and the gate is measuring
+exactly that. Across runs the hesitant answer lands somewhere in the 20–45%
+band and the disclosure in the 80–95% band; which side of the 55% line each
+one falls on is what stays put. A full logged run is in
+[`video/run.log`](video/run.log).
+
 ---
 
 ## The one idea
@@ -200,7 +207,16 @@ public/js/agent.js          Voice Agent API client
 docs/evidence.md            every measurement, including the one we threw out
 docs/deck.pdf               10-slide walkthrough
 docs/architecture.png       the diagram above
+tools/narrate.mjs           renders the demo narration with AssemblyAI's own TTS
+tools/build-video.mjs       builds the submission video from HTML frames + ffmpeg
+video/run.log               the logged run the video's terminal scenes quote
 ```
+
+The submission video is generated, not filmed: `node tools/narrate.mjs &&
+node tools/build-video.mjs`. Narration is the Voice Agent API speaking a
+`greeting` verbatim, frames are headless Chrome, and the terminal scenes are
+copied out of `video/run.log`. The `.mp4` itself is a build artifact and is not
+committed.
 
 ---
 

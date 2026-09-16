@@ -1,0 +1,18 @@
+{
+  "voice": "alba",
+  "scenes": [
+    { "id": "t01", "say": "Ask a patient whether they have been taking their tablets, and almost all of them say yes." },
+    { "id": "t02", "say": "Self-reported adherence overstates the real thing by a wide margin. That is why a good nurse does not listen to the word yes. They listen to the half second before it." },
+    { "id": "t03", "say": "Every voice agent built today throws that half second away. The transcript reads yes, whether it arrived instantly, or after a long breath and an uh." },
+    { "id": "t04", "say": "This is Tell. Its agent cannot write to the record by itself. It has to call a tool, and that tool is gated on how the answer sounded." },
+    { "id": "t05", "say": "Here is a real run, unedited. A synthesised patient, with a real nine hundred millisecond hesitation inside the word yes, streamed to AssemblyAI." },
+    { "id": "t06", "say": "The agent tried to record that the patient took every dose. The gate refused it. Forty four percent certain, and it says why: one point six seconds of dead air, and a hesitation marker." },
+    { "id": "t07", "say": "A refusal is not an error message. It is the one follow-up question that recovers the missing fact, chosen by whichever signal fired. The agent reads it, and asks it." },
+    { "id": "t08", "say": "Eighty one percent. Recorded. The record now says what is actually true. Without that gate, it would say the patient took every dose." },
+    { "id": "t09", "say": "One microphone, two AssemblyAI sockets. The Voice Agent API runs the conversation. Streaming speech to text runs the measurement, because it is the one that gives word timings and a confidence for every word." },
+    { "id": "t10", "say": "Eight signals, and every one of them is scored against this patient, earlier in this same call. Someone who always answers slowly is not punished for answering slowly. Someone who has been answering in three hundred milliseconds and suddenly takes two seconds: that is the one we catch." },
+    { "id": "t11", "say": "Building this turned up four things that are not in the documentation. The best one: the same actor says one sentence eight ways, calm through terrified. AssemblyAI's sentiment field returns neutral for all eight. But minimum word confidence goes from zero point nine nine, to zero point five zero. The signal was in the response the whole time. Just not in the field labelled sentiment." },
+    { "id": "t12", "say": "There was a fifth finding we had been carrying for a week. Before publishing, we went back to the raw data, and it did not hold up. It is in the repository, written up as the thing we got wrong." },
+    { "id": "t13", "say": "Tell. It will not take yes for an answer." }
+  ]
+}

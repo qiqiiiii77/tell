@@ -1,0 +1,42 @@
+^D
+[1mTell — simulated adherence call[0m [2m(hesitant patient)[0m
+
+[2mRendering patient audio…[0m
+[2mBoth sockets open.[0m
+
+[36m🔊 Tell:[0m    Hi, this is Tell calling from the clinic about your metformin. Is now an okay time to talk for a minute?
+[1m🗣  Patient:[0m Yeah, sure, now is fine.  [2m(420ms to start)[0m
+[35m   [tool.call] record_adherence {"answer":"unclear","medication":"metformin","missed_days":"","patient_words":"Yeah, sure, now is fine."}[0m
+   [31mGATE · REJECTED (structural)[0m [2mno adherence question was asked yet[0m
+
+[2m   [stt] 5 words: "Yeah, sure, now is fine."[0m
+[36m🔊 Tell:[0m    Thanks. Have you been taking the metformin as prescribed?
+[1m🗣  Patient:[0m Uh 900ms… yeah, yeah, I've been taking them.  [2m(1900ms to start)[0m
+[35m   [tool.call] record_adherence {"answer":"took_all","medication":"metformin","missed_days":"","patient_words":"Ah, yeah, yeah, I've been taking them."}[0m
+[2m   [stt] 7 words: "Ah. Yeah, yeah, I've been taking them."[0m
+
+   [31mGATE · REFUSED[0m  [1m44%[0m certain   [2mmetformin: took_all[0m
+      [33m·[0m 1614ms pause before "Ah. (held 1664ms)"
+      [33m·[0m hesitation markers: "Ah."
+      [2m(no personal baseline yet)[0m
+      [33m→ probe:[0m They paused before committing to the answer. Do not accept it. Ask them which specific days they think they may have missed.
+
+[36m🔊 Tell:[0m    No problem. Which specific days do you think you may have missed?
+[1m🗣  Patient:[0m Okay, honestly, I missed Tuesday and Wednesday. I was away from home.  [2m(500ms to start)[0m
+[35m   [tool.call] record_adherence {"answer":"missed_some","medication":"metformin","missed_days":"Tuesday, Wednesday","patient_words":"honestly, I missed Tuesday and Wednesday. I was away from home."}[0m
+[2m   [stt] 11 words: "honestly, I missed Tuesday and Wednesday. I was away from home."[0m
+
+   [32mGATE · RECORDED[0m  [1m81%[0m certain   [2mmetformin: missed_some (Tuesday, Wednesday)[0m
+      [33m·[0m transcription confidence fell to 0.844 on "Wednesday."
+
+[36m🔊 Tell:[0m    That's okay, thank you for letting me know. Have you had any side effects from the metformin?
+[1m🗣  Patient:[0m No, nothing like that.  [2m(430ms to start)[0m
+[2m   [stt] 3 words: "nothing like that."[0m
+
+[1m════════ CLINICAL RECORD ════════[0m
+    [1mAdherence[0m: metformin: missed_some (Tuesday, Wednesday)  [2mcertainty 81%[0m
+      [2m"honestly, I missed Tuesday and Wednesday. I was away from home."[0m
+
+[2m  2 gate decisions, 1 refused.[0m
+[2m  Baseline: {"ready":true,"turns":4,"onsetMs":19.04612499999712,"wordConfidence":0.9998705,"fillerPerWord":0.05714285714285715,"f0Mean":159.6}[0m
+
