@@ -59,7 +59,7 @@ export class MicPipeline {
     this.rate = this.ctx.sampleRate;
     this.source = this.ctx.createMediaStreamSource(this.stream);
 
-    await this.ctx.audioWorklet.addModule("/js/capture-worklet.js");
+    await this.ctx.audioWorklet.addModule(new URL("./capture-worklet.js", import.meta.url));
     this.node = new AudioWorkletNode(this.ctx, "capture", { numberOfInputs: 1, numberOfOutputs: 0 });
     this.node.port.onmessage = (e) => this.#onBlock(e.data);
     this.source.connect(this.node);
