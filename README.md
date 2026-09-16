@@ -8,6 +8,10 @@ and [Streaming Speech-to-Text v3](https://www.assemblyai.com/docs/streaming).
 
 ![Tell](docs/cover.png)
 
+**[Try the gate in your browser →](https://qiqiiiii77.github.io/tell/)**  
+The scoring engine is pure client-side code, so the hosted demo runs the real thing with no
+backend and no API key. Live calls need the local server — `npm start`.
+
 ---
 
 Ask a patient whether they have been taking their tablets and most of them say
