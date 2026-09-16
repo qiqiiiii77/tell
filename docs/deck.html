@@ -170,21 +170,17 @@
 </section>
 
 <!-- 6 · architecture -->
-<section class="slide" style="padding:58px 92px">
+<section class="slide" style="padding:58px 92px 110px">
   <div class="kicker">How it’s built on AssemblyAI</div>
-  <div style="display:grid; grid-template-columns:1fr 1.15fr; gap:56px; align-items:center; height:660px">
-    <div>
-      <h2 style="font-size:42px; margin-bottom:26px">One microphone,<br>two AssemblyAI sockets.</h2>
-      <p style="font-size:23px; max-width:38ch">The Voice Agent API returns
-        <span class="num" style="color:#e8edf5">transcript.user</span> as a plain string —
-        everything an agent needs to answer a question, and nothing you need to judge
-        whether someone meant it.</p>
-      <p style="font-size:23px; max-width:38ch; margin-top:22px">Streaming v3 returns the same speech as
-        <b>words with millisecond boundaries and a confidence each</b>.
-        One socket runs the conversation; the other measures it.</p>
-    </div>
-    <img class="arch" src="architecture.png" alt="architecture">
+  <div style="display:flex; gap:48px; align-items:baseline; margin-bottom:26px">
+    <h2 style="font-size:40px; margin-bottom:0; white-space:nowrap">One microphone,<br>two AssemblyAI sockets.</h2>
+    <p style="font-size:21px; max-width:none">The Voice Agent API returns
+      <span class="num" style="color:#e8edf5">transcript.user</span> as a plain string — everything an
+      agent needs to answer a question, and nothing you need to judge whether someone meant it.
+      Streaming v3 returns the same speech as <b>words with millisecond boundaries and a
+      confidence each</b>. One socket runs the conversation; the other measures it.</p>
   </div>
+  <img class="arch" src="architecture-wide.png" alt="architecture" style="max-height:470px">
   <div class="foot"><span>06</span><span>Tell</span></div>
 </section>
 

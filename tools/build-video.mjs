@@ -89,7 +89,7 @@ const CSS = `
   td.k { color:var(--ink); font-family:var(--mono); font-size:22px; white-space:nowrap; }
   td.n { font-family:var(--mono); color:var(--ink); }
   .cols { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; }
-  img { width:100%; background:#fff; border-radius:14px; padding:16px; }
+  img { width:100%; max-height:620px; object-fit:contain; background:#fff; border-radius:14px; padding:18px; }
   .foot { position:absolute; bottom:48px; left:104px; right:104px; display:flex;
           justify-content:space-between; font-family:var(--mono); font-size:18px; color:var(--dim); }
 `;
@@ -136,6 +136,20 @@ const T = {
 };
 
 const term = (...groups) => `<div class="term">${groups.flat().join("")}</div>`;
+
+/**
+ * Absolute file:// URL for an asset.
+ *
+ * Frame HTML is written into video/frames/, so a relative `../docs/x.png`
+ * resolves to video/docs/x.png and silently renders a broken-image placeholder
+ * — headless Chrome does not fail, it just screenshots the gap. Resolve from
+ * the repo root and assert the file is there.
+ */
+function asset(...parts) {
+  const p = join(ROOT, ...parts);
+  if (!existsSync(p)) throw new Error(`missing asset: ${p}`);
+  return `file://${p}`;
+}
 
 /* ------------------------------------------------------------------ *
  * scenes
@@ -187,18 +201,15 @@ const SCENES = {
 
   t09: `
     <div class="kicker">How it is built on AssemblyAI</div>
-    <div style="display:grid; grid-template-columns:0.95fr 1.05fr; gap:64px; align-items:center">
-      <div>
-        <h2 style="font-size:46px; margin-bottom:34px">One microphone,<br>two AssemblyAI sockets.</h2>
-        <p style="font-size:26px">The Voice Agent API returns
-          <span class="mono" style="color:var(--ink)">transcript.user</span> as a plain string —
-          everything an agent needs to answer a question, and nothing you need to judge
-          whether someone meant it.</p>
-        <p style="font-size:26px; margin-top:26px">Streaming v3 returns the same speech as
-          <b>words with millisecond boundaries and a confidence each</b>.</p>
-      </div>
-      <img src="../docs/architecture.png">
-    </div>`,
+    <div style="display:flex; gap:56px; align-items:baseline; margin-bottom:34px">
+      <h2 style="font-size:46px; white-space:nowrap">One microphone,<br>two AssemblyAI sockets.</h2>
+      <p style="font-size:25px; max-width:none">The Voice Agent API returns
+        <span class="mono" style="color:var(--ink)">transcript.user</span> as a plain string —
+        everything an agent needs to answer a question, and nothing you need to judge whether
+        someone meant it. Streaming v3 returns the same speech as
+        <b>words with millisecond boundaries and a confidence each</b>.</p>
+    </div>
+    <img src="${asset("docs", "architecture-wide.png")}" style="max-height:560px; object-fit:contain">`,
 
   t10: `
     <div class="kicker">What the gate measures</div>
