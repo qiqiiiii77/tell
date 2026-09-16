@@ -418,4 +418,25 @@ document.querySelectorAll("[data-lab]").forEach((b) =>
 );
 $("gate-threshold").textContent = `${Math.round(GateConfig.materialThreshold * 100)}%`;
 renderRecord();
-setStatus("Ready");
+
+/**
+ * The gate is pure client-side code, so the scoring half of this page works
+ * anywhere — including static hosting with no server and no API key. Live calls
+ * need a backend to mint AssemblyAI tokens. Detect which one we are, and say so
+ * plainly rather than letting Start call fail with a network error.
+ */
+(async function detectBackend() {
+  setStatus("Checking…");
+  try {
+    const r = await fetch("/api/health", { cache: "no-store" });
+    if (!r.ok) throw new Error("no backend");
+    await r.json();
+    setStatus("Ready");
+  } catch {
+    $("btn-start").disabled = true;
+    $("btn-start").title = "Live calls need the local server — see the note above";
+    $("static-note").hidden = false;
+    setStatus("Gate lab only — no backend", "warn");
+    runLab("hesitant");
+  }
+})();

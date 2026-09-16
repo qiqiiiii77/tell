@@ -40,6 +40,15 @@
 
 <main>
   <section class="panel call">
+    <div id="static-note" class="static-note" hidden>
+      <b>You’re on the hosted demo.</b>
+      The gate itself is pure client-side code, so <b>everything in the Gate panel is the
+      real scoring engine</b>, running in your browser right now — press those four buttons.
+      A live call also needs a server to mint AssemblyAI tokens, so <code>Start call</code>
+      is disabled here. To talk to the agent:
+      <code>git clone</code> the repo, add a key, <code>npm start</code>. Or run
+      <code>node tools/simulate-call.mjs</code> for the whole loop with no microphone.
+    </div>
     <div class="panel-head">
       <h2>Call</h2>
       <div class="controls">

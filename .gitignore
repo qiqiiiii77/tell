@@ -3,3 +3,7 @@ records/
 node_modules/
 .DS_Store
 samples/audio/*.aiff
+
+# 中文工作文档（不进公开仓库，比赛是英文的）
+状态与待办.md
+提交材料.md

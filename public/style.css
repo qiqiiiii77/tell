@@ -224,3 +224,15 @@ footer a { color: var(--dim); }
 ::-webkit-scrollbar { width: 9px; height: 9px; }
 ::-webkit-scrollbar-thumb { background: #232b38; border-radius: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
+
+/* shown only on static hosting, where there is no token backend */
+.static-note {
+  background:#16202e; border:1px solid #2a3d57; border-left:3px solid var(--blue);
+  border-radius:9px; padding:13px 15px; margin-bottom:14px;
+  font-size:13px; line-height:1.6; color:var(--muted);
+}
+.static-note b { color:var(--ink); font-weight:600; }
+.static-note code {
+  font-family:var(--mono); font-size:12px; color:var(--accent);
+  background:#0f141c; padding:1px 5px; border-radius:4px;
+}
