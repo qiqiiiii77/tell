@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tell — AssemblyAI Voice Agent Hackathon</title>
+<style>
+  @page { size: 1600px 900px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#0d1017; --panel:#161c26; --line:#252d3a; --ink:#e8edf5;
+    --muted:#8b97a8; --dim:#5c6779; --mint:#6ee7b7; --red:#f87171;
+    --amber:#fbbf24; --blue:#7aa2ff;
+    --mono: "SF Mono", Menlo, Monaco, monospace;
+  }
+  body { background:#000; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .slide {
+    width:1600px; height:900px; background:var(--bg); color:var(--ink);
+    padding:78px 92px 130px; page-break-after:always; position:relative; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .slide::before { content:""; position:absolute; top:0; left:0; right:0; height:5px; background:var(--mint); }
+  .kicker { font-size:17px; letter-spacing:3px; color:var(--dim); text-transform:uppercase; margin-bottom:26px; }
+  h1 { font-size:74px; font-weight:650; letter-spacing:-1.6px; line-height:1.08; }
+  h2 { font-size:52px; font-weight:620; letter-spacing:-0.9px; line-height:1.14; margin-bottom:34px; }
+  p  { font-size:27px; line-height:1.55; color:var(--muted); max-width:42ch; }
+  p b, li b { color:var(--ink); font-weight:600; }
+  .mint { color:var(--mint); } .red { color:var(--red); } .amber { color:var(--amber); }
+  .num  { font-family:var(--mono); }
+  .foot { position:absolute; bottom:40px; left:92px; right:92px;
+          display:flex; justify-content:space-between;
+          font-size:15px; color:var(--dim); font-family:var(--mono); }
+
+  /* title */
+  .title { display:flex; flex-direction:column; justify-content:center; }
+  .title h1 { font-size:132px; }
+  .title .tag { font-size:38px; color:var(--mint); margin-top:18px; }
+  .title .sub { font-size:25px; color:var(--muted); margin-top:30px; max-width:58ch; line-height:1.5; }
+
+  /* two column */
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+  .cols.tight { grid-template-columns:1.05fr 0.95fr; }
+
+  /* transcript block */
+  .tx { font-family:var(--mono); font-size:22px; line-height:2.0; }
+  .tx .who { color:var(--dim); display:inline-block; width:110px; }
+  .tx .said { color:var(--ink); }
+  .gap { display:inline-block; padding:2px 16px; border:2px dashed var(--red);
+         border-radius:6px; color:var(--red); font-size:17px; margin:0 6px; }
+
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px 32px; }
+  .card.bad  { border-color:#5b2a2a; background:#1d1416; }
+  .card.good { border-color:#2f6b52; background:#101e19; }
+  .stamp { font-family:var(--mono); font-size:19px; font-weight:700; letter-spacing:2.6px; }
+  .score { font-family:var(--mono); font-size:56px; font-weight:700; line-height:1; }
+
+  ul { list-style:none; }
+  li { font-size:25px; line-height:1.5; color:var(--muted); margin-bottom:20px; padding-left:34px; position:relative; }
+  li::before { content:"—"; position:absolute; left:0; color:var(--dim); }
+
+  table { border-collapse:collapse; width:100%; font-size:23px; }
+  th { text-align:left; font-size:14px; letter-spacing:2px; text-transform:uppercase;
+       color:var(--dim); font-weight:600; padding:0 18px 14px 0; border-bottom:1px solid var(--line); }
+  td { padding:19px 18px 19px 0; border-bottom:1px solid #1b222d; color:var(--muted); vertical-align:top; }
+  td.k { color:var(--ink); font-family:var(--mono); font-size:19px; white-space:nowrap; }
+  td.n { font-family:var(--mono); color:var(--ink); }
+
+  .big { font-size:40px; line-height:1.35; color:var(--ink); max-width:30ch; font-weight:500; }
+  .quote { font-size:46px; line-height:1.3; font-weight:600; }
+  img.arch { width:100%; max-height:600px; object-fit:contain; background:#fff; border-radius:12px; padding:12px; }
+</style>
+</head>
+<body>
+
+<!-- 1 · title -->
+<section class="slide">
+  <div class="title">
+    <div class="kicker">AssemblyAI Voice Agent Hackathon</div>
+    <h1>Tell</h1>
+    <div class="tag">It won’t take “yes” for an answer.</div>
+    <div class="sub">A medication-adherence follow-up call that listens to <b style="color:#e8edf5">how</b>
+      the answer was given — and refuses to write it into the record until the patient sounded like they meant it.</div>
+  </div>
+  <div class="foot"><span>github.com/qiqiiiii77/tell</span><span>Voice Agent API · Streaming STT v3</span></div>
+</section>
+
+<!-- 2 · problem -->
+<section class="slide">
+  <div class="kicker">The problem</div>
+  <h2>Ask a patient if they took<br>their tablets, and they say yes.</h2>
+  <div class="cols">
+    <p>Self-reported adherence overstates the real thing by a wide margin, and every
+      clinician who has made a follow-up call knows it.</p>
+    <p>Which is why a good nurse doesn’t listen to the word “yes”.<br><br>
+      <b>They listen to the half-second before it.</b></p>
+  </div>
+  <div class="foot"><span>02</span><span>Tell</span></div>
+</section>
+
+<!-- 3 · what gets thrown away -->
+<section class="slide">
+  <div class="kicker">What every voice agent does with that half-second</div>
+  <h2 style="margin-bottom:46px">It throws it away.</h2>
+  <div class="tx" style="margin-bottom:44px">
+    <div><span class="who">Patient</span><span class="said">“Uh <span class="gap">900 ms</span> yeah, yeah, I’ve been taking them.”</span></div>
+    <div style="margin-top:22px"><span class="who">Transcript</span><span class="said" style="color:#8b97a8">yes</span></div>
+  </div>
+  <p style="max-width:56ch">The record ends up holding a fact that nobody actually believes —
+    and the next clinical decision is made on top of it.</p>
+  <div class="foot"><span>03</span><span>Tell</span></div>
+</section>
+
+<!-- 4 · the one idea -->
+<section class="slide">
+  <div class="kicker">The one idea</div>
+  <h2>The agent cannot write to the<br>record by itself.</h2>
+  <div class="cols tight">
+    <div>
+      <p style="margin-bottom:28px">It has to call a tool, and that tool is gated on how the answer sounded.</p>
+      <div class="card good">
+        <div class="big" style="font-size:31px; max-width:none">No adherence fact enters the record
+          unless the patient sounded certain — or was asked again.</div>
+      </div>
+    </div>
+    <div>
+      <p>A refusal isn’t an error message. It’s a <b>specific follow-up question</b>,
+        chosen by whichever signal fired, handed back to the agent in the
+        <span class="num" style="color:#e8edf5">error</span> field of the tool result.</p>
+      <p style="margin-top:26px">We control when <span class="num" style="color:#e8edf5">tool.result</span> is sent,
+        so the gate holds the agent’s turn open until it has actually heard the patient.
+        <b>No race, no guessing.</b></p>
+    </div>
+  </div>
+  <div class="foot"><span>04</span><span>Tell</span></div>
+</section>
+
+<!-- 5 · the moment -->
+<section class="slide">
+  <div class="kicker">A real run · <span class="num">node tools/simulate-call.mjs</span> · unedited</div>
+  <div class="tx" style="font-size:20px; line-height:1.85">
+    <div><span class="who">Patient</span><span class="said">“Uh <span class="gap">900 ms</span> yeah, yeah, I’ve been taking them.”</span>
+      <span style="color:#5c6779; font-size:16px">   1.9 s to start</span></div>
+    <div style="color:#5c6779; margin:14px 0 18px 110px">agent → record_adherence { answer: "took_all" }</div>
+  </div>
+
+  <div class="card bad" style="display:flex; align-items:center; gap:44px; margin-bottom:26px">
+    <div style="flex:1">
+      <div class="stamp red">GATE · REFUSED</div>
+      <div class="num" style="font-size:19px; color:#c9a0a4; margin-top:12px">1668 ms dead air — “Ah.” held for 1696 ms</div>
+      <div class="num" style="font-size:19px; color:#c9a0a4">transcription confidence fell to 0.61 on “been”</div>
+      <div style="font-size:19px; color:#8b97a8; margin-top:10px">→ probe: ask which specific days they missed</div>
+    </div>
+    <div style="text-align:right"><div class="score red">34%</div>
+      <div class="num" style="font-size:15px; color:#8b97a8">certain</div></div>
+  </div>
+
+  <div class="tx" style="font-size:20px; line-height:1.8">
+    <div><span class="who">Tell</span><span class="said">“Do you know if there were any specific days you might have missed?”</span></div>
+    <div><span class="who">Patient</span><span class="said">“Okay, honestly — I missed Tuesday and Wednesday.”</span></div>
+  </div>
+
+  <div class="card good" style="display:flex; align-items:center; gap:44px; margin-top:22px; padding:20px 32px">
+    <div style="flex:1">
+      <div class="stamp mint">GATE · RECORDED</div>
+      <div class="num" style="font-size:19px; color:#e8edf5; margin-top:10px">metformin: missed_some (Tuesday, Wednesday)</div>
+    </div>
+    <div style="text-align:right"><div class="score mint">88%</div></div>
+  </div>
+
+  <div class="foot"><span>05</span><span>Without the gate, that record reads <b style="color:#f87171">took_all</b>.</span></div>
+</section>
+
+<!-- 6 · architecture -->
+<section class="slide" style="padding:58px 92px">
+  <div class="kicker">How it’s built on AssemblyAI</div>
+  <div style="display:grid; grid-template-columns:1fr 1.15fr; gap:56px; align-items:center; height:660px">
+    <div>
+      <h2 style="font-size:42px; margin-bottom:26px">One microphone,<br>two AssemblyAI sockets.</h2>
+      <p style="font-size:23px; max-width:38ch">The Voice Agent API returns
+        <span class="num" style="color:#e8edf5">transcript.user</span> as a plain string —
+        everything an agent needs to answer a question, and nothing you need to judge
+        whether someone meant it.</p>
+      <p style="font-size:23px; max-width:38ch; margin-top:22px">Streaming v3 returns the same speech as
+        <b>words with millisecond boundaries and a confidence each</b>.
+        One socket runs the conversation; the other measures it.</p>
+    </div>
+    <img class="arch" src="architecture.png" alt="architecture">
+  </div>
+  <div class="foot"><span>06</span><span>Tell</span></div>
+</section>
+
+<!-- 7 · signals -->
+<section class="slide">
+  <div class="kicker">What the gate measures</div>
+  <h2 style="font-size:44px; margin-bottom:30px">Eight signals, combined with a noisy-OR —<br>
+    so one loud tell isn’t averaged away by seven quiet ones.</h2>
+  <div class="cols" style="gap:56px">
+    <table>
+      <tr><th>Signal</th><th>What it catches</th></tr>
+      <tr><td class="k">onsetDelay</td><td>how long before they answered at all</td></tr>
+      <tr><td class="k">preAnswerPause</td><td>dead air — gaps <b>and</b> drawled fillers</td></tr>
+      <tr><td class="k">hedging</td><td>“I think”, “pretty much”, “I try to”</td></tr>
+      <tr><td class="k">fillerLoad</td><td>“uh”, “um”, weighted</td></tr>
+      <tr><td class="k">wordConfidence</td><td>the transcriber’s own uncertainty</td></tr>
+      <tr><td class="k">revision</td><td>started one answer, switched to another</td></tr>
+      <tr><td class="k">arousal</td><td>pitch and loudness off their baseline</td></tr>
+      <tr><td class="k">brevity</td><td>a one-word answer that took a long time</td></tr>
+    </table>
+    <div>
+      <div class="card" style="margin-bottom:26px">
+        <div class="big" style="font-size:27px; max-width:none">Every signal is scored against
+          <b>this patient, earlier in this same call.</b></div>
+      </div>
+      <p style="font-size:23px">A patient who opens every sentence at 2.2 seconds isn’t penalised
+        for taking 2.2 seconds. A patient who’s been answering in 300 ms and suddenly
+        takes 2.2 <b>is</b>.</p>
+      <p style="font-size:23px; margin-top:22px">Ordinary turns — the small talk, the consent —
+        are what build that baseline. Before there’s enough of them, scoring falls back to
+        absolute thresholds and is <b>labelled as weaker evidence</b>, in the UI and in the record.</p>
+    </div>
+  </div>
+  <div class="foot"><span>07</span><span>Both cases are in the test suite.</span></div>
+</section>
+
+<!-- 8 · findings -->
+<section class="slide">
+  <div class="kicker">Four things we found · none of them documented</div>
+  <table style="font-size:23px">
+    <tr><th style="width:52%">Finding</th><th>Why it mattered</th></tr>
+    <tr>
+      <td><b>Sentiment analysis is prosody-blind; word confidence isn’t.</b><br>
+        Eight RAVDESS readings of one sentence, neutral to terrified, all return
+        <span class="num">NEUTRAL</span> within 0.07.</td>
+      <td class="n">min word confidence<br>0.994 calm → <span class="red">0.504 fearful</span><br>
+        <span style="font-size:16px; color:#5c6779">the signal was in the response all along</span></td>
+    </tr>
+    <tr>
+      <td><b>Under stress the model writes down disfluencies nobody said.</b><br>
+        The fearful reading comes back as “Kids <span class="amber">uh</span> are talking by the door”.</td>
+      <td class="n">there is no “uh”<br>in the RAVDESS script</td>
+    </tr>
+    <tr>
+      <td><b>Streaming v3 rejects audio frames outside 50–1000 ms.</b><br>
+        An AudioWorklet naturally emits ~21 ms blocks.</td>
+      <td class="n"><span class="red">error 3007</span>, socket closed<br>
+        <span style="font-size:16px; color:#5c6779">the call dies the moment they speak</span></td>
+    </tr>
+    <tr>
+      <td><b>Silence is swallowed into the preceding token.</b><br>
+        A 900 ms hesitation comes back as ONE word, <span class="num">"Ah."</span>, spanning 1696 ms —
+        only 128 ms of measurable gap.</td>
+      <td class="n">86% certain → <span class="red">34%</span><br>
+        <span style="font-size:16px; color:#5c6779">once dead air is counted properly</span></td>
+    </tr>
+  </table>
+  <div class="foot"><span>08</span><span>All four reproducible from the repo · docs/evidence.md</span></div>
+</section>
+
+<!-- 9 · the one we dropped -->
+<section class="slide">
+  <div class="kicker">And one we threw out</div>
+  <h2 style="font-size:46px">We’d been carrying a fifth finding<br>for a week. It didn’t hold up.</h2>
+  <div class="cols tight">
+    <div>
+      <p style="margin-bottom:26px">We believed <span class="num" style="color:#e8edf5">language_detection: true</span>
+        silently disabled disfluency preservation. Before publishing, we went back to the raw responses.</p>
+      <table style="font-size:20px">
+        <tr><th>Run</th><th>Words</th><th>Fillers</th></tr>
+        <tr><td class="k">language_detection</td><td class="n">401</td><td class="n">0</td></tr>
+        <tr><td class="k">language_code: en_us</td><td class="n">412</td><td class="n">0</td></tr>
+      </table>
+      <p style="font-size:22px; margin-top:22px">Neither transcript had a single “uh”. The 11-word
+        difference was <b>one dropped clause</b>, not stripped disfluencies.</p>
+    </div>
+    <div class="card" style="align-self:center">
+      <div class="big" style="font-size:31px; max-width:none">We’d rather ship one fewer headline
+        than one we can’t defend.</div>
+      <p style="font-size:20px; margin-top:22px">It’s written up in the repo as the thing we got wrong —
+        <span class="num" style="color:#e8edf5">docs/evidence.md §5</span>.</p>
+    </div>
+  </div>
+  <div class="foot"><span>09</span><span>Tell</span></div>
+</section>
+
+<!-- 10 · limits + close -->
+<section class="slide">
+  <div class="kicker">Where it stops, and what it isn’t</div>
+  <div class="cols" style="gap:70px">
+    <div>
+      <h2 style="font-size:38px; margin-bottom:26px">Designed to be refused</h2>
+      <ul>
+        <li><b>One re-ask, then it accepts.</b> A third time is an interrogation, not care — it records and flags for a clinician instead.</li>
+        <li><b>The patient is never told this exists.</b> No mention of pauses, tone or scores. The prompt forbids it.</li>
+        <li><b>Hesitation is not deception.</b> A low score means this answer isn’t reliable enough to act on — a claim about evidence, not about the person.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 style="font-size:38px; margin-bottom:26px">Honest limits</h2>
+      <ul>
+        <li><b>No clinical validation.</b> Every number here comes from RAVDESS actors and synthesised speech. No real patient has used it.</li>
+        <li><b>Accent, age, stammer and cognitive conditions move the signals.</b> Scoring within one call is a mitigation, not a solution.</li>
+        <li><b>A flagged answer is a prompt for a human to look</b> — never a conclusion.</li>
+      </ul>
+    </div>
+  </div>
+  <div style="position:absolute; bottom:92px; left:92px; right:92px; display:flex;
+              justify-content:space-between; align-items:flex-end; border-top:1px solid var(--line); padding-top:30px">
+    <div>
+      <div style="font-size:52px; font-weight:650">Tell</div>
+      <div class="mint" style="font-size:24px; margin-top:6px">It won’t take “yes” for an answer.</div>
+    </div>
+    <div class="num" style="text-align:right; color:var(--muted); font-size:18px; line-height:1.8">
+      <div>github.com/qiqiiiii77/tell</div>
+      <div>39 tests · zero dependencies · MIT</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

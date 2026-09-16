@@ -194,6 +194,8 @@ public/js/gate.js           the gate
 public/js/stt.js            Streaming v3 client
 public/js/agent.js          Voice Agent API client
 docs/evidence.md            every measurement, including the one we threw out
+docs/deck.pdf               10-slide walkthrough
+docs/architecture.png       the diagram above
 ```
 
 ---
